@@ -1,1 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #3B3B98 !important; /* Change to your desired color */
+  color: #000 !important; /* Change text color if needed */
+}

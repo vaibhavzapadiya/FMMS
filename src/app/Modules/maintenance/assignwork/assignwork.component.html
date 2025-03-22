@@ -1,0 +1,40 @@
+<div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Assign Technician </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="assignForm">
+            <div class="mb-3">
+              <label for="technician" class="form-label"><Strong>Select Technician</Strong></label>
+              <select class="form-control" formControlName="technicianId">
+                <option value="">Select</option>
+            <option *ngFor="let tech of Technicianlist" [value]="tech.employeeId">
+              {{ tech.employeeName }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="DueDate" class="form-label p-1">Due Date</label>
+              <input type="date" formControlName="DueDate">
+            </div>
+            <div class="mb-3">
+              <span *ngIf="assignForm.get('DueDate')?.errors?.['dateInPast']" class="error">
+                  Date Can Not Be In The Past
+              </span>
+          </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn " id="btnAssignTechnician" (click)="assignTechnician()">Assign</button>
+        </div>
+     
+            <span *ngIf="errmsg" class="error">{{errmsg}}</span>
+
+    
+      </div>
+    </div>
+  </div>

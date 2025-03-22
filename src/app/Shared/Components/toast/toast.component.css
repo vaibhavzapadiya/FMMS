@@ -1,0 +1,20 @@
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1056;
+  }
+  
+  .toast {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    min-width: 200px;
+  }
+
+  .success { background-color: #28a745; }
+  .error { background-color: #dc3545; }
+  .info { background-color: #17a2b8; }
+  .warning { background-color: #ffc107; }

@@ -1,0 +1,59 @@
+<div class="container shadow-lg p-3 mb-5 bg-body rounded text-center">
+  <h2 class="display-4">Dashboard</h2>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-lg p-3 bg-white rounded">
+        <div class="card-body" >
+          <canvas id="statusChart"></canvas>
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-lg p-3 bg-white rounded">
+        <div class="card-body">
+          <canvas id="statusChartForWorkOrder"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container p-4">
+  <h3>Maintenance Request</h3>
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let item of maintenancecount; let i = index">
+      <div class="card shadow-lg p-3 bg-white rounded card-pending">
+        <div class="card-header pending">
+          <i class="fa fa-hourglass-start p-1 iconss" aria-hidden="true"></i>
+          {{ item.statusName }} Request
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title mb-3">{{ item.requestCount }}</h5>
+          <button class="btn viewbtn" routerLink="/fmms/maintenance/list" [style.backgroundColor]="getButtonColor(i)">View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container p-4">
+  <h3>Work Order Request</h3>
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let item of workordercount; let i = index">
+      <div class="card shadow-lg p-3 bg-white rounded card-pending">
+        <div class="card-header pending">
+          <i class="fa fa-hourglass-start p-1 iconss" aria-hidden="true"></i>
+          {{ item.statusName }} Work Order
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title mb-3">{{ item.workOrderCount }}</h5>
+          <button class="btn viewbtn" routerLink="/fmms/workorder" *ngIf="currentuserroleid==2 || currentuserroleid==3" [style.backgroundColor]="getButtonColor(i)">View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

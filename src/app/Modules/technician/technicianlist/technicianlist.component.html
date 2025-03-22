@@ -1,0 +1,55 @@
+<div class="container  shadow-lg p-3 mb-5 bg-body rounded text-center">
+    <h2 class="display-4">Technician List</h2>
+</div>
+
+<div>
+    <form [formGroup]="form" class="d-flex align-items-center gap-2 mb-3">
+        <span class="mb-3"><strong>Filter By</strong></span>
+      <div class="mb-3">
+   
+        <input type="text" formControlName="employeeName" class="form-control" placeholder="name....">
+    
+      </div>
+   
+      <div class="mb-3">
+     
+        <input type="number" formControlName="employeeId" class="form-control" placeholder="id">
+      </div>
+
+   
+      <button class="btn filter mb-3" (click)="loadAllTechnician()">Filter</button>
+    </form>
+  </div>
+
+  <div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile Number</th>
+          
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of technicianList">
+                <td>{{item.employeeId}}</td>
+                <td>{{item.employeeName}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.phoneNmber}}</td>
+            </tr>
+        </tbody>
+
+    </table>
+  </div>
+
+
+
+
+  
+<div>
+    <button class="btn btn-secondary m-1" id="prev" (click)="prev()" [disabled]="pagenumber==1">Prev</button>
+    <button class="btn" id="next" [disabled]="technicianList.length==0 || pageSize>technicianList.length" (click)="next()">Next</button>
+
+  </div>

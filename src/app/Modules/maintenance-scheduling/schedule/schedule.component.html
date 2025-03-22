@@ -1,0 +1,209 @@
+<div class="container  shadow-lg p-3 mb-5 bg-body rounded text-center">
+    <h2 class="display-4">Schedule Work</h2>
+</div>
+
+<div>
+    <button class="btn" id="btnScheduleMaintenance" (click)="openModal()" *ngIf="currentroleid==2">Schedule Maintenance</button>
+</div>
+
+
+
+<!-- Filter Form -->
+<div>
+    <form [formGroup]="filterform" class="d-flex align-items-center gap-2 mb-3">
+        <span class="mb-1"><Strong>Filter By</Strong></span>
+
+        <div>
+            <input type="number" placeholder="Schedule Id" formControlName="scheduleid" class="form-control">
+        </div>
+        <div class="">
+
+            <select name="" id="ddlVendorServiceType" formControlName="equipmentId" class="form-control">
+                <option value=""> Equipment</option>
+                <option [value]="item.equipmentId" *ngFor="let item of Equipmentlist">{{ item.equipmentName }}</option>
+            </select>
+
+        </div>
+
+        <div class="">
+
+            <select name="" id="ddlVendorServiceType" formControlName="technicianId" class="form-control">
+                <option value=""> Technician</option>
+                <option [value]="item.employeeId" *ngFor="let item of Technicianlist">{{ item.employeeName }}</option>
+            </select>
+        </div>
+
+        <div class="">
+
+            <select name="" id="ddlVendorServiceType" formControlName="maintenanceTypeId" class="form-control">
+                <option value=""> MaintenanceType</option>
+                <option [value]="item.maintenanceTypeId" *ngFor="let item of Maintenancetypelist">{{ item.typeName }}
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <select name="" id="ddlVendorServiceType" formControlName="status" class="form-control">
+                <option value="">status</option>
+                <option value="true">Completed</option>
+                <option value="false">Pending</option>
+            </select>
+        </div>
+
+        <div>
+            <select name="" id="ddlVendorServiceType" formControlName="Notified" class="form-control">
+                <option value="">Notified</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+        <button class="btn custombtn" id="filter" (click)="GetAllScheduleWorkOrder()">Filter</button>
+        <button class="btn btn-secondary m-1">Reset Filter</button>
+    </form>
+</div>
+
+<div>
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>ScheduleID</th>
+                <th>Technician Name</th>
+                <th>EquipmentName</th>
+                <th>TypeName</th>
+                <th>ScheduledDate</th>
+                <th>Completed</th>
+                <th *ngIf="currentroleid==2">IsNotified</th>
+                <th>Description</th>
+                <th *ngIf="currentroleid==2">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of ScheduleWorkList">
+                <td>{{item.scheduleId}}</td>
+                <td>{{item.employeeName}}</td>
+                <td>{{item.equipmentName}}</td>
+                <td>{{item.typeName}}</td>
+                <td>{{item.scheduledDate | date}}</td>
+                <td>
+                    <i class="fa fa-circle fa-2x" aria-hidden="true" [ngClass]="{ 'text-danger': item.completed===false ,
+                                    'noalert': item.completed===true }">
+                    </i>
+
+                </td>
+                <td *ngIf="currentroleid==2">
+                    <i class="fa fa-circle fa-2x" aria-hidden="true" [ngClass]="{ 'text-danger': item.isNotified===false ,
+                                 'noalert': item.isNotified===true }">
+                    </i>
+                </td>
+                <td>{{item.description}}</td>
+                <td *ngIf="currentroleid==2"><button class="btn" id="btnNotifyTechnician"
+                        (click)="openNotifyModal(item.scheduleId)" >Notify</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<div class="modal fade" id="notifyModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Notify</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>Are you sure want to notify to technician?</span>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn  " (click)="notitfiytotechnician()" id="notify">Notify</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="schedulrModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Schedule Maintenance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="scheduleform" class="form-group">
+                    <div class="mb-3">
+                        <label for="">Equipment</label>
+                        <select name="" id="ddlVendorServiceType" formControlName="equipmentId" class="form-control">
+                            <option value="">Select Equipment</option>
+                            <option [value]="item.equipmentId" *ngFor="let item of Equipmentlist">{{ item.equipmentName
+                                }}</option>
+                        </select>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="">Technician</label>
+                        <select name="" id="ddlVendorServiceType" formControlName="technicianId" class="form-control">
+                            <option value="">Select Technician</option>
+                            <option [value]="item.employeeId" *ngFor="let item of Technicianlist">{{ item.employeeName
+                                }}</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="">MaintenanceType</label>
+                        <select name="" id="ddlVendorServiceType" formControlName="maintenanceTypeId"
+                            class="form-control">
+                            <option value="">Select MaintenanceType</option>
+                            <option [value]="item.maintenanceTypeId" *ngFor="let item of Maintenancetypelist">{{
+                                item.typeName }}</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="">Schedule Date</label>
+                        <input type="date" formControlName="scheduledDate" class="form-control">
+
+                    </div>
+                    <div class="mb-3">
+                        <span *ngIf="scheduleform.get('scheduledDate')?.errors?.['dateInPast']" class="error">
+                            Date Can Not Be In The Past
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="">Description</label>
+                        <input type="textarea" formControlName="description" class="form-control">
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn " id="schdeluebtn" (click)="schedulemaintenance()">Schedule</button>
+            </div>
+
+
+            <div *ngIf="formerrormsg">
+                <span class="error">{{formerrormsg}}</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    <button class="btn btn-secondary m-1" id="prev" (click)="prev()" [disabled]="PageNumber==1">Prev</button>
+    <button class="btn" id="next" [disabled]="ScheduleWorkList.length==0 || PageSize>ScheduleWorkList.length" (click)="next()">Next</button>
+
+  </div>

@@ -1,0 +1,94 @@
+<!-- Top Navbar -->
+ <div>
+<nav class="navbar navbar-expand-lg navbar-dark top-navbar container-fluid">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    
+    <!-- Sidebar Toggle Button -->
+    <button class="btn btn-light toggle-btn " id="sidebarToggle">
+      <i class="fa fa-solid fa-bars"></i>
+    </button>
+ 
+    <!-- Navbar Brand -->
+    <a class="navbar-brand ms-4">Facility Maintenance Management System</a>
+ 
+
+ 
+    <!-- Collapsible Navbar Content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ms-auto">
+      
+      </ul>
+    </div>
+ 
+    <!-- Right Navbar Icons -->
+    <div class="d-flex align-items-center">
+<span class="empoyeename p-1">{{Employeename}}</span>
+      <a  class="fa fa-user-circle d-flex m-1 rounded-circle bell fa-1x" ></a>
+      <button type="button" class="btn position-relative inbox m-1 " >
+        Inbox
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+          1
+          
+        </span>
+      </button>
+     
+       <button class=" fa fa-sign-out d-flex  rounded-circle bell  fa-1x" (click)="logout()"></button>
+
+  
+      <!-- <img src="" class="rounded-circle profile-img img-fluid " alt="User"> -->
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar + Main Content -->
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar shadow-lg bg-white rounded">
+    <ul class="nav flex-column">
+      <li class="nav-item" routerLink="/fmms/dashboard" routerLinkActive="activelink"  ><a class="nav-link"><i class="fa fa-tachometer iconss"></i> <span class="sidebar-text">Dashboard</span></a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/fmms/maintenance/form" routerLinkActive="activelink"><i class="fa fa-ticket iconss"></i> <span class="sidebar-text">New Request</span></a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/fmms/maintenance/list" routerLinkActive="activelink"><i class="fa fa-list iconss"></i> <span class="sidebar-text">All Requests</span></a></li>
+
+      <!-- <li class="nav-item"><a class="nav-link"  *ngIf="roleid==1 " routerLink="/fmms/projects" routerLinkActive="activelink" ><i class="fa fa-solid fa-folder iconss" ></i> <span class="sidebar-text">Projects</span></a></li> -->
+      <li class="nav-item"><a class="nav-link" *ngIf="roleid==2 || roleid==3 " routerLink="/fmms/workorder" routerLinkActive="activelink"><i class="fa fa-hourglass-end iconss"></i> <span class="sidebar-text">Work Order</span></a></li>
+      <li class="nav-item"><a class="nav-link" *ngIf="roleid==2" routerLink="/fmms/technician" routerLinkActive="activelink"><i class="fa fa-solid fa-users iconss" ></i> <span class="sidebar-text">Technician</span></a></li>
+      <li class="nav-item" routerLink="/fmms/Schedule" routerLinkActive="activelink" ><a class="nav-link" *ngIf="roleid==2 || roleid==3"><i class="fa fa-wrench iconss "></i> <span class="sidebar-text">Schedule </span></a>
+      </li>
+      <li class="nav-item" *ngIf="roleid==2">
+        <a class="nav-link" (click)="toggleVendorMenu()">
+          <i class="fa fa-truck iconss"></i> <span class="sidebar-text">Vendors</span>
+          <i class="fa" [ngClass]="{'fa-chevron-down': !showVendorMenu, 'fa-chevron-up': showVendorMenu}" style="float:right;"></i>
+        </a>
+        
+        <!-- Submenu for Vendors -->
+        <ul class="nav flex-column submenu" *ngIf="showVendorMenu">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/fmms/vendors/list" routerLinkActive="activelink">
+              <i class="fa fa-list iconss"></i> Vendor List
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/fmms/vendors/assign" routerLinkActive="activelink">
+              <i class="fa fa-tasks iconss"></i> Assign Work
+            </a>
+          </li>
+        </ul>
+      </li>     
+      <li class="nav-item"><a class="nav-link" *ngIf="roleid==2" routerLink="/fmms/inventory" routerLinkActive="activelink"><i class="fa fa-shopping-cart iconss"></i> <span class="sidebar-text">Inventory</span></a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/fmms/reports" *ngIf="roleid==2" routerLinkActive="activelink"><i class="fa fa-solid fa-book iconss" ></i> <span class="sidebar-text">Reports</span></a></li>
+      <!-- <li class="nav-item"><a class="nav-link"><i class="fa fa-history iconss"></i> <span class="sidebar-text">History</span></a></li> -->
+<!-- 
+      <li class="nav-item"><a class="nav-link"><i class="fa fa-solid fa-gear iconss"></i> <span class="sidebar-text">Settings</span></a></li> -->
+    </ul>
+  </div>
+ 
+  <!-- Main Content -->
+  <main class="content flex-grow-1 p-4 mt-4 shadow-lg mb-4 me-4 rounded  ">
+
+    <router-outlet ></router-outlet>
+    <app-toast></app-toast>
+
+ 
+  </main>
+</div>
+

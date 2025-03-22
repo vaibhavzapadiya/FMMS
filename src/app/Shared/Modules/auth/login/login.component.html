@@ -1,0 +1,55 @@
+
+
+  <div class="container p-4 m-8">
+    
+    <div class="login-container">
+  
+      
+      <div class="login-box shadow-lg">
+        <!-- Logo or App Title -->
+        <h3 class="text-center text-dark">Facility Maintenance Management System</h3>
+     
+        <!-- Login Form -->
+        <form [formGroup]="loginform">
+          <!-- Username Field -->
+          <div class="mb-3">
+            <label for="username" class="form-label text-light">Username</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-solid fa-user"></i></span>
+              <input type="text" class="form-control" id="username"formControlName="userName" name="username" required>
+            </div>
+          </div>
+          <div class="error">
+            <span *ngIf="loginform.get('userName')?.errors?.['required'] && hasError">UserName Is Required</span>
+          </div>
+     
+          <!-- Password Field -->
+          <div class="mb-3">
+            <label for="password" class="form-label text-light">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-solid fa-lock"></i></span>
+              <input type="password" class="form-control" id="password" formControlName="passwordHash" name="password" required>
+            </div>
+          </div>
+          <div class="error">
+            <span *ngIf="loginform.get('passwordHash')?.errors?.['required'] && hasError">Password Is Required</span>
+          </div>
+     
+          <!-- Forgot Password Link -->
+          <!-- <div class="d-flex justify-content-between align-items-center">
+            <a href="#" class="text-light">Forgot Password?</a>
+          </div> -->
+     
+          <!-- Login Button -->
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary w-100" (click)="onLogin()">Login</button>
+          </div>
+          <div class="error" *ngIf="errorMessage!=null && hasError">
+            <span>{{errorMessage}}</span>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+  </div>

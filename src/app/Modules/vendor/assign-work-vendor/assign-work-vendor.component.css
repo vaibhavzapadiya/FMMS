@@ -1,0 +1,19 @@
+.filter,#next{
+    background-color: #3B3B98;
+    color: white;
+
+}
+#btnUploadVendorInvoice{
+    background-color: #3B3B98;
+    color: white;
+
+}
+#uploadinvoice{
+    background-color: #3B3B98;
+    color: white;
+
+}
+
+.error{
+    color: red;
+}

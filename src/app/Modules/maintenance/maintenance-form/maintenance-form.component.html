@@ -1,0 +1,56 @@
+<div class="container shadow-lg p-4 mb-5 bg-body rounded text-center" >
+    <h2 class="display-5">Create Maintenance Request</h2>
+  </div>
+   
+  <!-- 🔹 Centered Form with Controlled Width -->
+  <div class="d-flex justify-content-center">
+    <div class="col-md-6 col-lg-5"> <!-- ✅ Decreased Width -->
+      <form [formGroup]="form"  class="form-group p-3 shadow-sm bg-white rounded">
+        
+        <!-- 🔹 Issue Type Selection -->
+        <div class="mb-3">
+          <label for="IssueId" class="form-label"><strong>Issue Type</strong></label>
+          <select name="issueType" id="ddlIssueType" formControlName="IssueId" class="form-control">
+            <option value="">Select Issue Type</option>
+            <option *ngFor="let item of IssueTypelist " [value]="item.issueId">
+              {{ item.issueType }}
+            </option>
+          </select>
+        </div>
+   
+
+        <div class="mb-3">
+          <label for="Description" class="form-label"><strong>Description</strong></label>
+          <input type="textarea" id="txtIssueDescription" formControlName="Description" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label for="PriorityId" class="form-label"><strong>Priority Level</strong></label>
+          <select name="priorityLevel" id="ddlPriorityLevel" formControlName="PriorityId" class="form-control">
+            <option value="">Select Priority Level</option>
+            <option *ngFor="let item of PriorityList" [value]="item.priorityId">
+              {{ item.priorityLevel }}
+            </option>
+          </select>
+        </div>
+  
+        <div class="mb-3">
+          <label for="uploadImage" class="form-label"><strong>Upload Image</strong></label>
+          <input type="file" id="uploadImage" class="form-control" (change)="onFileSelected($event)" formControlName="image">
+        </div>
+   
+ 
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary p-2" id="btnSubmitMaintenanceRequest" (click)="submit()">Submit</button>
+        </div>
+        <div class="error" >
+            <span *ngIf="haserror"> All fields are required</span>
+            <span *ngIf="!errorMessage">{{errorMessage}}</span>
+          </div>
+      </form>
+    </div>
+  
+  </div>
+
+
+   

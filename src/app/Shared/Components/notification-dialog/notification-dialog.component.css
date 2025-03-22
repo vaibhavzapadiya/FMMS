@@ -1,0 +1,15 @@
+.notification-container {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .notification-item {
+    margin-bottom: 10px;
+  }

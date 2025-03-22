@@ -1,0 +1,16 @@
+.spinner{
+    color: #3B3B98;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    
+}
+#btnSubmitMaintenanceRequest{
+    background-color: #3B3B98;
+    color: white;
+
+}
+
+.error{
+    color:red;
+}

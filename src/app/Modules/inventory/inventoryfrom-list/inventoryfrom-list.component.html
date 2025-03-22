@@ -1,0 +1,232 @@
+    
+<div class="container  shadow-lg p-3 mb-5 bg-body rounded text-center">
+    <h2 class="display-4">Inventory</h2>
+</div>
+
+<div>
+    <button class="btn" (click)="openModallForAdd()" id="btnAddSparePart">Add Spare Part</button>
+    <button class="btn m-1" id="lowstocklaert" (click)="alertlowstock()">Get Low Stock Alert</button>
+</div>
+
+<div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item ID</th>
+          <th>Item Name</th>
+          <th>Current Stock</th>
+          <th>Thresold</th>
+          <th>IsStock Low</th>
+          <th>Action</th>
+
+       
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of sparepartList">
+          <td>{{ item.itemId }}</td>
+          <td>{{ item.itemName }}</td>
+          <td>{{ item.currentStock }}</td>
+          <td>{{item.alertThreshold ?? 0}}</td>
+          <td>
+            <i class="fa fa-circle fa-2x" aria-hidden="true"
+               [ngClass]="{ 'text-danger': item.alertThreshold > item.currentStock,
+                            'noalert': item.alertThreshold <= item.currentStock }">
+            </i>
+          </td>
+     
+          <td>
+            <button class="btn  m-1"
+              id="btnUpdateInventory"
+             (click)="openmodalforupdate(item.itemId)"   >
+              Update Stock
+            </button>
+            <button class="btn  m-1"
+            id="btnUpdateInventory"
+           (click)="openmodalforthrsold(item.itemId)"   >
+            Update Thresold
+          </button>
+            <button class="btn btn-danger"  (click)="openModal(item.itemId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- delete Work Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete item??</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <span>Are you sure want to delete this item</span>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn  btn-danger" (click)="deleteitem()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="addsparepartModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Spare Part</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="additemForm" class="form-group">
+            <div class="mb-3">
+              <label for="txtSparePartName">Spare Part Name</label>
+              <input type="text" formControlName="itemName" id="txtSparePartName" class="form-control">
+           
+            </div>
+            <div class="mb-3">
+               <label for="txtCurrentStock">Current Stock</label>
+               <input type="number" formControlName="currentStock" id="txtCurrentStock" class="form-control">
+            </div>
+
+            <div class="mb-3">
+             <label for="chkLowStockAlert" class="form-check-label">Low Stock Alert</label>
+             <input type="checkbox" formControlName="stockAlert" class="form-check-input" id="chkLowStockAlert">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn " id="btnAssignTechnician" (click)="Addsparepart()">Add</button>
+        </div>
+     
+      
+
+    
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="lowstcokModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Low Stock Deatils</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <table class="table table-striped table-responsive">
+          <thead>
+            <tr>
+              <th>itemId </th>
+              <th>itemName </th>
+              <th>currentStock </th>
+              <th>alertThreshold </th>
+                
+             
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of lowstockitem">
+              <th>{{item.itemId}}</th>
+              <th>{{item.itemName}}</th>
+              <th>{{item.currentStock}}</th>
+              <th>{{item.alertThreshold}}</th>
+
+            </tr>
+          </tbody>
+
+         </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          
+        </div>
+     
+      
+
+    
+      </div>
+    </div>
+  </div>
+
+
+  
+<!---update modal-->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateform">
+
+          <div class="mb-3">
+            <label for="txtSparePartName">Stock</label>
+            <input type="text" formControlName="CurrentStock" id="txtSparePartName" class="form-control">
+         
+          </div>
+
+     
+
+        </form>
+     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn " id="btnAssignTechnician" (click)="updatesparepart()">Update</button>
+      </div>
+   
+    
+<div *ngIf="errrormsg" >
+ <span class="error">{{errrormsg}}</span>
+</div>
+  
+    </div>
+  </div>
+</div>
+
+<!--thresold update model-->
+
+
+<div class="modal fade" id="updatethresoldmodal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Thresold</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateThresoldform">
+
+          <div class="mb-3">
+            <label for="txtSparePartName">Thresold</label>
+            <input type="number" formControlName="threold" id="txtSparePartName" class="form-control">
+         
+          </div>
+
+     
+
+        </form>
+     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn " id="btnAssignTechnician" (click)="updateThresold()">Update</button>
+      </div>
+   
+    
+
+  
+    </div>
+  </div>
+</div>

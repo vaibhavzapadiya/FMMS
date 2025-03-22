@@ -1,0 +1,12 @@
+#btnScheduleMaintenance,#schdeluebtn,#filter,#btnNotifyTechnician,#notify,#next{
+    background-color: #3B3B98;
+    color: white;
+
+}
+.error{
+    color: red;
+}
+.noalert{
+    color: green;
+}
+

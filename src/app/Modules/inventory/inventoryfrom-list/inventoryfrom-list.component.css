@@ -1,0 +1,24 @@
+#btnUpdateInventory{
+    background-color: #3B3B98;
+    color: white;
+}
+
+.noalert{
+    color: green;
+}
+#btnAddSparePart,#btnAssignTechnician,#lowstocklaert{
+    background-color: #3B3B98;
+    color: white
+
+}
+
+.spinner{
+    color: #3B3B98;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    
+}
+.error{
+    color: red;
+}
