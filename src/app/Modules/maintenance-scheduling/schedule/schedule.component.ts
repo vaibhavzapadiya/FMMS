@@ -26,7 +26,7 @@ ScheduleWorkList:any[]=[]
 PageNumber:number=1
 PageSize:number=10
 currentroleid!:number | null
-
+modal:any
 currentScheduleId!:number
   constructor(private fb:FormBuilder,private shceduleservice:ScheduleService,private tokenservice:TokenService){
      
@@ -58,14 +58,16 @@ currentScheduleId!:number
   }
 
 
-
+  reset(){
+    this.GetAllScheduleWorkOrder()
+  }
   
   openModal() {
 
 
-    let modal = new bootstrap.Modal(document.getElementById('schedulrModal'));
+    this.modal = new bootstrap.Modal(document.getElementById('schedulrModal'));
 
-    modal.show();
+    this.modal.show();
   }
 
   loadFormdropdown(){
@@ -102,6 +104,7 @@ currentScheduleId!:number
       
       this.shceduleservice.Schedulemaintenancerequest(newdata).subscribe({
         next:(res)=>{
+          this.GetAllScheduleWorkOrder()
           console.log(res);
           this.scheduleform.reset();
 

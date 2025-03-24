@@ -20,4 +20,8 @@ export class WorkorderService {
   updateWorkOrderStatus(data:any){
     return this.http.put(`${this.apiBaseUrl}/WorkOrder/UpdateWorkOrderStatus`,data)
   }
+
+  assignWorkTOVendor(data:any){
+    return this.http.post(`${this.apiBaseUrl}/Vendor_Workorder/assignWorkToVendor`,data)
+  }
 }

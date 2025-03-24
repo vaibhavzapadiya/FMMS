@@ -3,6 +3,7 @@ import { NavbarComponent } from './Shared/Components/navbar/navbar.component';
 import { authGuard } from './Shared/Gaurd/AuthGuard/auth.guard';
 import { roleGuard } from './Shared/Gaurd/RoleGuard/role.guard';
 import { UnauthorizedComponent } from './Shared/Components/unauthorized/unauthorized.component';
+import { NotfoundComponent } from './Shared/Components/notfound/notfound.component';
 
 
 
@@ -35,5 +36,7 @@ export const routes: Routes = [
             ]
 
 
-    }
+    },
+    {path:'**',component:NotfoundComponent}
+    
 ];

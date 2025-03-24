@@ -53,19 +53,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let vendor of WorkorderList">
-                <td>{{ vendor.workOrderId }}</td>
-                <td>{{ vendor.requestId }}</td>
-                <td>{{ vendor.employeeName }}</td>
+            <tr *ngFor="let work of WorkorderList">
+                <td>{{ work.workOrderId }}</td>
+                <td>{{ work.requestId }}</td>
+                <td>{{ work.employeeName }}</td>
        
-                <td>{{vendor.assignedAt | date}}</td>
-                <td>{{vendor.statusName }}</td>
-                <td>{{vendor.dueDate | date }}</td>
-                <td> <a href="{{vendor.imageUrl}}" target="_blank"><img [src]="vendor.imageUrl" alt="No Image" width="50" height="50"> </a></td>
+                <td>{{work.assignedAt | date}}</td>
+                <td [appStatusHighlight]="work.statusId">{{work.statusName }}</td>
+                <td>{{work.dueDate | date }}</td>
+                <td> <a href="{{work.imageUrl}}" target="_blank"><img [src]="work.imageUrl" alt="No Image" width="50" height="50"> </a></td>
                 
-                <td>{{vendor.description }}</td>
+                <td>{{work.description }}</td>
            
-                <td><button class="btn update" (click)="openModal(vendor.workOrderId)"  [disabled]="(currentroleId1==3 && vendor.statusName=='Completed') ||(currentroleId1==3 && vendor.statusName=='Failed') ">Update</button></td>
+                <td><button class="btn update m-1" (click)="openModal(work.workOrderId)"  [disabled]="(currentroleId1==3 && work.statusName=='Completed') ||(currentroleId1==3 && work.statusName=='Failed') ">Update</button>
+                  <button *ngIf="currentroleId1===2" class="btn btn-secondary" (click)="openModalForAssignVendor(work)" >Assign To Vendor</button>
+                </td>
+                <td></td>
 
 
 
@@ -106,6 +109,50 @@
     </div>
   </div>
 
+
+
+
+
+  <div class="modal fade" id="assignWorkTOVendorModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Assign Work To Vendor??</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="assignWorkTOVendorormForm" class="form-group">
+
+              <div class="mb-3">
+                <label for="">Vendor Name</label>
+                <select name="" id="ddlVendorServiceType" formControlName="vendorId" class="form-control">
+                    <option value="">Select Vendor</option>
+                    <option [value]="item.vendorId" *ngFor="let item of vendorList">{{item.vendorName}}-{{item.vendorId}}</option>
+                </select>
+    
+            </div>
+                
+
+            
+            <div class="mb-3">
+              <label for="">Location</label>
+              <select name="" id="ddlVendorServiceType" formControlName="location" class="form-control">
+                  <option value="" >Select location</option>
+                  <option  [value]="item.locationname" *ngFor="let item of location">{{item.locationname}}</option>
+              </select>
+
+          </div>
+
+            </form>
+          </div>
+       
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn  updatebtn" (click)="AssignWorkToVendor()">Assign</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <div>

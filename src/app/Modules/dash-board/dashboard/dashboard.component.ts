@@ -63,11 +63,13 @@ export class DashboardComponent implements OnInit {
 
   }
   createStatusChart(statusSummary: any[]) {
+    console.log(statusSummary);
+    
     const labels = statusSummary.map((item) => item.statusName) ;
     const data = statusSummary.map((item) => item.requestCount);
     const colors = [
-      'rgba(54, 162, 235, 0.8)', // Blue
       'rgba(255, 206, 86, 0.8)', // Yellow
+      'rgba(54, 162, 235, 0.8)', // Blue
       'rgba(255, 99, 132, 0.8)', // Red
     ];
 
@@ -107,9 +109,11 @@ export class DashboardComponent implements OnInit {
 
     const labels = workordercount.map((item) => item.statusName);
     const data = workordercount.map((item) => item.workOrderCount);
+
+    
     const colors = [
-      'rgba(54, 162, 235, 0.8)', // Blue
       'rgba(255, 206, 86, 0.8)', // Yellow
+      'rgba(54, 162, 235, 0.8)', // Blue
       'rgba(255, 99, 132, 0.8)', // Red
     ];
 
@@ -145,13 +149,16 @@ export class DashboardComponent implements OnInit {
   }
   getButtonColor(index: number): string {
     const colors = [
-      'rgba(54, 162, 235, 0.8)', // Blue
       'rgba(255, 206, 86, 0.8)', // Yellow
+      'rgba(54, 162, 235, 0.8)', // Blue
+  
       'rgba(255, 99, 132, 0.8)', // Red
       
     ];
 
-    return colors[index]; 
+    return colors[index-1]; 
   }
+
+  
 
 }

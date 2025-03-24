@@ -22,6 +22,8 @@ export class AssignWorkVendorComponent implements OnInit {
   PageNumber:number=1
   PageSize:number=10
  modal:any
+ UpdateStatusform!:FormGroup
+ CurrentVwndoeWorkOrderId!:number
   constructor(private fb: FormBuilder, private vendorservice: VendorService) {
     this.form = this.fb.group({
       statusId: [''],
@@ -38,6 +40,9 @@ export class AssignWorkVendorComponent implements OnInit {
       Amount: ['', Validators.required]
 
 
+    })
+    this.UpdateStatusform=this.fb.group({
+      statusId:['',Validators.required]
     })
   }
   ngOnInit(): void {
@@ -128,6 +133,30 @@ export class AssignWorkVendorComponent implements OnInit {
       });
 
     }
+  }
+
+  OpenModalForUpdate(id:number){
+    this.currentworkorderid=id
+
+    this.modal = new bootstrap.Modal(document.getElementById('UpdatestatusModal'));
+
+    this.modal.show();
+    
+
+  }
+
+  updateWorkOrderStatus(){
+    const newdata={
+      vendorWorkOrderId:this.currentworkorderid,
+      statusId:parseInt(this.UpdateStatusform.get('statusId')?.value),
+
+    }
+    this.vendorservice.updateWorkOrderStatus(newdata).subscribe({
+      next:()=>{
+        this.loadWorkOrder()
+        this.modal.hide();
+      }
+    })
   }
 
   prev(){

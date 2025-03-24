@@ -8,12 +8,13 @@ import { forkJoin } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AssignworkComponent } from '../assignwork/assignwork.component';
 import { TokenService } from '../../../Shared/Services/TokenService/token.service';
+import { StatusHighlightDirective } from '../../../Shared/Directive/StatusDirective/status-highlight.directive';
 declare var bootstrap: any; // Required for Bootstrap Modal
 
 @Component({
   selector: 'app-maintenance-request-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, AssignworkComponent],
+  imports: [CommonModule, ReactiveFormsModule, AssignworkComponent,StatusHighlightDirective],
   templateUrl: './maintenance-request-list.component.html',
   styleUrl: './maintenance-request-list.component.css',
 })
@@ -35,7 +36,7 @@ export class MaintenanceRequestListComponent implements OnInit {
   currentrequestId!:number
   modalofReject:any
   modal:any
-
+ currentDeleteID!:number
   constructor(
     private maintenanceservice: MaintenanceService,private tokenservice:TokenService,
     private fb: FormBuilder
@@ -157,6 +158,7 @@ export class MaintenanceRequestListComponent implements OnInit {
     this.maintenanceservice.updateStatus(this.currentrequestId,3).subscribe({
    
       next:()=>{
+        this.currentrequestId
         this.modalofReject.hide();
         this.loadMaintenanceRequestList()
       
@@ -172,11 +174,31 @@ export class MaintenanceRequestListComponent implements OnInit {
    
 
   }
-  opendeletemodel(id: number) {
+  openRejectModal(id: number) {
     this.currentrequestId=id
 
-   this.modalofReject = new bootstrap.Modal(document.getElementById('deleteModal'));
+   this.modalofReject = new bootstrap.Modal(document.getElementById('rejectModal'));
       this.modalofReject.show();
+  }
+
+  openDeleteModal(id:number){
+    this.currentDeleteID=id
+    this.modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    this.modal.show();
+  }
+
+  DeleteItem(){
+   this.maintenanceservice.deleteItem(this.currentDeleteID).subscribe({
+    next:()=>{
+     
+      this.modal.hide()
+      this.loadMaintenanceRequestList();
+    },
+    error:()=>{
+      
+    }
+   })
+
   }
 
   prev(){

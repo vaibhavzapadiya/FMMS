@@ -49,6 +49,7 @@
         <thead>
             <tr>
                 <th>WorkOrder Id</th>
+                <th>Work Order Id</th>
                 <th>VendorId</th>
                 <th>Vendor Name</th>
                 <th>Status</th>
@@ -64,6 +65,7 @@
         <tbody>
             <tr *ngFor="let vendor of WorkORderList">
                 <td>{{ vendor.vendorWorkOrderId }}</td>
+                <td>{{ vendor.workOrderID }}</td>
                 <td>{{ vendor.vendorId }}</td>
                 <td>{{ vendor.vendorName }}</td>
                 <td>{{ vendor.statusName }}</td>
@@ -73,7 +75,7 @@
                 <td>
                     <Button class="btn m-1 " id="btnUploadVendorInvoice"
                         (click)="openModalForAssignWork(vendor.vendorWorkOrderId)">Upload Invoice</Button>
-                    <!-- <button class="btn btn-secondary">Update Status</button> -->
+                    <button class="btn btn-secondary" (click)="OpenModalForUpdate(vendor.vendorWorkOrderId)">Update Status</button>
                 </td>
 
 
@@ -141,3 +143,35 @@
     <button class="btn" id="next" [disabled]="WorkORderList.length==0 || PageSize>WorkORderList.length" (click)="next()">Next</button>
   
   </div>
+
+<!---Update Status-->
+  <div class="modal fade" id="UpdatestatusModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload Invoice</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="UpdateStatusform" class="form-group">
+
+                    <div class="mb-3">
+                        <label for="">Status</label>
+                        <select name="" id="ddlVendorServiceType" formControlName="statusId" class="form-control">
+                            <option value="">Select Status</option>
+                            <option [value]="item.statusId" *ngFor="let item of Statuslist">{{item.statusName}}</option>
+                        </select>
+            
+                    </div>
+                   
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn " id="uploadinvoice" (click)="updateWorkOrderStatus()">Update</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>

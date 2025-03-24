@@ -57,4 +57,9 @@ export class MaintenanceService {
    return this.http.put(`${this.apiBaseUrl}/Maintenance/updatemaintenancetatus?id=${requestid}&statusid=${statusid}`,{})
    }
 
+   deleteItem(id:number){
+    return this.http.delete(`${this.apiBaseUrl}/Maintenance/deleteRequest/${id}`)
+   }
+
+
 }

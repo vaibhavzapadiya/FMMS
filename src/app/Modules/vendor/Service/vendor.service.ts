@@ -34,4 +34,8 @@ export class VendorService {
   uploadInvoice(data:any){
     return this.http.post(`${this.apiBaseUrl}/Invoice/UploadInvoice`,data)
   }
+
+  updateWorkOrderStatus(data:any){
+    return this.http.put(`${this.apiBaseUrl}/Vendor_Workorder/updateWorkORderStatus`,data)
+  }
 }

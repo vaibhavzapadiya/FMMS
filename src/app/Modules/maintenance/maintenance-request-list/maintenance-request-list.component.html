@@ -55,9 +55,10 @@
           <th>Priority Level</th>
           <th>Issue Type</th>
           <th>Created At</th>
-          <th>Status Name</th>
+          <th>Status</th>
           <th>Image</th>
           <th *ngIf="roleid==2">Action</th>
+          <th *ngIf="roleid!=2">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -68,15 +69,21 @@
           <td>{{ item.priorityLevel }}</td>
           <td>{{ item.issueType }}</td>
           <td>{{ item.createdAt | date:'yyyy-MM-dd HH:mm' }}</td>
-          <td>{{ item.statusName }}</td>
+          <td [appStatusHighlight]="item.statusID">{{ item.statusName }}</td>
           <td > <a href="{{item.imageUrl}}" target="_blank"><img [src]="item.imageUrl" alt="No Image" width="50" height="50"> </a></td>
           <td *ngIf="roleid==2">
             <button class="btn custombtn m-1"
               id="btnAssignTechnician"
-                 (click)="openModal(item)" >
+                 (click)="openModal(item)" *ngIf="roleid==2" >
               Assign
             </button>
-            <button class="btn btn-danger" (click)="opendeletemodel(item.requestID)"  [disabled]="item.statusName === 'Rejected' || item.statusName === 'Assigned'">Reject</button>
+            <button class="btn btn-danger" (click)="openRejectModal(item.requestID)" *ngIf="roleid==2" [disabled]="item.statusID===3" >Reject</button>
+      
+          </td>
+
+          <td *ngIf="roleid!=2">
+            <button class="btn edit m-1" *ngIf="item.statusID==1">Edit</button>
+            <button class="btn btn-danger"   (click)="openDeleteModal(item.requestID)" >Delete</button>
           </td>
         </tr>
       </tbody>
@@ -95,7 +102,7 @@
     <span>{{ errormsg }}</span>
   </div>
 
-  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+  <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -114,5 +121,24 @@
     </div>
   </div>
 
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete request??</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <span>Are you sure want to delete this request</span>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn  btn-danger" (click)="DeleteItem()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <app-assignwork [requestData]="selectedRequest" (onAssign)="handleAssignment($event)"></app-assignwork>
